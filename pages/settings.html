@@ -24,6 +24,7 @@
           document.getElementById('useCustom').checked = !!s.useCustom;
           document.getElementById('customEndpoint').value = s.customEndpoint || '';
           document.getElementById('customApiKey').value = s.customApiKey || '';
+          document.getElementById('customAuth').value = s.customAuth || 'bearer';
           toggleCustom();
         }catch{}
       }
@@ -36,6 +37,7 @@
         s.useCustom = document.getElementById('useCustom').checked;
         s.customEndpoint = document.getElementById('customEndpoint').value.trim();
         s.customApiKey = document.getElementById('customApiKey').value.trim();
+        s.customAuth = document.getElementById('customAuth').value;
         localStorage.setItem(LS_KEY, JSON.stringify(s));
         const status = document.getElementById('status');
         status.textContent = 'Saved';
@@ -93,6 +95,17 @@
           <label class="field">
             <span class="label">Custom API Key</span>
             <input id="customApiKey" type="password" placeholder="Stored locally, sent to server only when used">
+          </label>
+        </div>
+        <div class="grid cols-2 gap top">
+          <label class="field">
+            <span class="label">Auth Scheme</span>
+            <select id="customAuth" style="width:100%;padding:12px 12px;border-radius:10px;border:1px solid var(--border);background:#0c0f14;color:var(--text)">
+              <option value="bearer">Authorization: Bearer &lt;key&gt; (default)</option>
+              <option value="authorization">Authorization: &lt;key&gt;</option>
+              <option value="api-key">api-key: &lt;key&gt; (Azure style)</option>
+              <option value="x-api-key">X-API-Key: &lt;key&gt;</option>
+            </select>
           </label>
         </div>
         <div class="note" style="margin-top:8px">Your key is kept in localStorage and only sent to serverless function when generating content.</div>
