@@ -1,0 +1,50 @@
+:root{
+  --bg:#0b0d11;--card:#12151c;--text:#e7ecf3;--muted:#9aa3b2;--brand:#4f8cff;--brand-2:#7aa6ff;--border:#212633;--ok:#1fb981;--warn:#ffca58;--err:#ff6b6b
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,Helvetica Neue,sans-serif;background:var(--bg);color:var(--text)
+}
+.container{max-width:1100px;margin:0 auto;padding:24px}
+.site-header{border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(79,140,255,.06),transparent)}
+.site-header h1{margin:0 0 6px 0;font-size:24px}
+.subtitle{margin:0;color:var(--muted)}
+.site-footer{border-top:1px solid var(--border);margin-top:48px}
+.site-footer h3{margin:0 0 12px 0;font-size:16px}
+.site-footer .list{list-style:none;padding:0;margin:0}
+.site-footer .list li{margin:6px 0}
+.site-footer a{color:var(--text);text-decoration:none}
+.site-footer a:hover{text-decoration:underline}
+.copyright{margin-top:16px;color:var(--muted);text-align:center;font-size:12px}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:20px}
+.grid{display:grid}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.gap{gap:16px}
+.top{margin-top:12px}
+.row{display:flex;gap:12px;align-items:center}
+.row-between{display:flex;align-items:center;justify-content:space-between}
+
+.field{display:block}
+.label{display:block;margin-bottom:8px;color:var(--muted);font-size:13px}
+.option-row{display:flex;gap:16px}
+input[type=text],input[type=password],input[type=number],textarea{
+  width:100%;padding:12px 12px;border-radius:10px;border:1px solid var(--border);background:#0c0f14;color:var(--text);outline:none
+}
+textarea{resize:vertical}
+.btn{background:#1a1f2b;border:1px solid var(--border);color:var(--text);padding:10px 14px;border-radius:10px;cursor:pointer}
+.btn.primary{background:linear-gradient(180deg,var(--brand),var(--brand-2));border:0;color:#fff}
+.btn:disabled{opacity:.6;cursor:not-allowed}
+.right{margin-left:auto}
+.muted{color:var(--muted)}
+.small{font-size:12px}
+.status{margin-top:8px;min-height:18px}
+.hidden{display:none}
+.note{margin-top:8px;color:var(--muted);font-size:12px}
+
+@media (max-width: 900px){
+  .cols-3{grid-template-columns:1fr}
+  .cols-2{grid-template-columns:1fr}
+}

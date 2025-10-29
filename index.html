@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Amazon Listing Writer | AI Title & Bullet Generator</title>
+  <meta name="description" content="Free Amazon listing copywriting tool. Generate AI titles and 5 bullets with keywords and competitor inputs. SEO friendly. Configure your own AI endpoint and model.">
+  <meta name="keywords" content="Amazon, listing, title, bullets, AI, copy tool, keywords, SEO, ecommerce">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Amazon Listing Writer</h1>
+      <p class="subtitle">AI-generated professional titles and 5 bullets · Keyword, competitor and product inputs</p>
+      <div class="row" style="margin-top:8px">
+        <a class="btn" href="pages/settings.html">Settings</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Generation Settings</h2>
+      <div class="grid cols-3 gap">
+        <label class="field">
+          <span class="label">Generation Type</span>
+          <div class="option-row">
+            <label><input type="radio" name="genType" value="title" checked> Title</label>
+            <label><input type="radio" name="genType" value="bullets"> 5 Bullets</label>
+            <label><input type="radio" name="genType" value="both"> Both</label>
+          </div>
+        </label>
+      </div>
+      <div class="note">Note: Configure provider/model/temperature in Settings. You can also enable “Use my own API”.</div>
+    </section>
+
+    <section class="card">
+      <h2>Inputs</h2>
+      <div class="grid cols-2 gap">
+        <label class="field">
+          <span class="label">Core Keywords (comma-separated)</span>
+          <textarea id="keywords" rows="3" placeholder="Enter the most relevant distinct keywords, separated by commas"></textarea>
+        </label>
+        <label class="field">
+          <span class="label">Product Features / Attributes / Benefits</span>
+          <textarea id="features" rows="3" placeholder="Materials, dimensions, compatibility, use cases, differentiators, etc."></textarea>
+        </label>
+      </div>
+
+      <div class="grid cols-2 gap top">
+        <label class="field">
+          <span class="label">Competitor Titles</span>
+          <textarea id="compTitle" rows="3" placeholder="Paste multiple competitor titles, one per line"></textarea>
+        </label>
+        <label class="field">
+          <span class="label">Competitor 5 Bullets</span>
+          <textarea id="compBullets" rows="3" placeholder="Paste competitor bullets, ideally one point per line"></textarea>
+        </label>
+      </div>
+
+      <div class="actions">
+        <button id="generateBtn" class="btn primary">Generate</button>
+        <button id="clearBtn" class="btn">Clear</button>
+        <label class="right muted small"><input id="saveConfig" type="checkbox" checked> Remember form data</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Results</h2>
+      <div id="outputTitleWrap" class="field hidden">
+        <div class="label row-between">
+          <span>Title (≤ 200 characters, aim close to 200)</span>
+          <span class="muted small">Length: <b id="titleLen">0</b> / 200</span>
+        </div>
+        <textarea id="outputTitle" rows="3" readonly></textarea>
+        <div class="row">
+          <button id="copyTitle" class="btn">Copy Title</button>
+        </div>
+      </div>
+
+      <div id="outputBulletsWrap" class="field hidden top">
+        <span class="label">5 Bullets</span>
+        <textarea id="outputBullets" rows="10" readonly></textarea>
+        <div class="row">
+          <button id="copyBullets" class="btn">Copy Bullets</button>
+        </div>
+      </div>
+
+      <div id="status" class="status muted small"></div>
+    </section>
+  </main>
+
+  <section class="container card" id="seo">
+    <h2>Website SEO</h2>
+    <p class="muted">Amazon listing tool, AI copywriting, title generator, bullet generator, keyword optimization, listing optimization, SEO-friendly product copy, ecommerce tools</p>
+    <p>Amazon Listing Writer helps sellers create optimized titles and five bullet points with AI. Provide keywords, competitor references and product features to generate conversion-oriented, policy-compliant copy tailored for Amazon search and SEO.</p>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="grid cols-3 gap">
+        <div>
+          <h3>About</h3>
+          <p>This tool helps ecommerce sellers create Amazon listing copy efficiently. Enter keywords, competitor info and product highlights to generate high-quality titles and five bullets that follow platform policies and SEO best practices.</p>
+        </div>
+        <div>
+          <h3>Site</h3>
+          <ul class="list">
+            <li><a href="pages/about.html">About</a></li>
+            <li><a href="pages/privacy.html">Privacy Policy</a></li>
+            <li><a href="pages/terms.html">Terms of Service</a></li>
+            <li><a href="pages/settings.html">Settings</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3>SEO Keywords</h3>
+          <p class="muted">Amazon listing tool, AI copy, title generator, five bullets, ecommerce, keyword optimization, listing optimization, PPC, SEO indexing, product copy generator</p>
+        </div>
+      </div>
+      <div class="copyright">© <span id="year"></span> Amazon Listing Writer. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

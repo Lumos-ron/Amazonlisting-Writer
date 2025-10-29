@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Settings | Amazon Listing Writer</title>
+  <meta name="description" content="Configure provider, model and temperature; optionally use your own API.">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .note-inline{margin-top:8px;color:var(--muted);font-size:12px}
+  </style>
+  <script>
+    (()=>{
+      const LS_KEY = 'amazon-listing-tool:v1';
+      function load(){
+        try{
+          const s = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+          document.getElementById('model').value = s.model || 'gpt-4o-mini';
+          document.getElementById('temperature').value = (s.temperature ?? 0.7);
+          document.getElementById('provider').value = s.provider || 'openai';
+          document.getElementById('useCustom').checked = !!s.useCustom;
+          document.getElementById('customEndpoint').value = s.customEndpoint || '';
+          document.getElementById('customApiKey').value = s.customApiKey || '';
+          toggleCustom();
+        }catch{}
+      }
+      function save(){
+        const raw = localStorage.getItem(LS_KEY);
+        const s = raw ? (JSON.parse(raw)||{}) : {};
+        s.model = document.getElementById('model').value.trim();
+        s.temperature = Number(document.getElementById('temperature').value);
+        s.provider = document.getElementById('provider').value;
+        s.useCustom = document.getElementById('useCustom').checked;
+        s.customEndpoint = document.getElementById('customEndpoint').value.trim();
+        s.customApiKey = document.getElementById('customApiKey').value.trim();
+        localStorage.setItem(LS_KEY, JSON.stringify(s));
+        const status = document.getElementById('status');
+        status.textContent = 'Saved';
+        status.style.color = 'var(--muted)';
+        setTimeout(()=>{ status.textContent=''; }, 1500);
+      }
+      function toggleCustom(){
+        const on = document.getElementById('useCustom').checked;
+        document.getElementById('customBox').style.display = on ? 'block' : 'none';
+        document.getElementById('providerBox').style.display = on ? 'none' : 'block';
+      }
+      window.addEventListener('DOMContentLoaded', ()=>{
+        load();
+        document.getElementById('saveBtn').addEventListener('click', save);
+        document.getElementById('useCustom').addEventListener('change', ()=>{ toggleCustom(); });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Settings</h1>
+    <div class="card">
+      <div id="providerBox" class="grid cols-2 gap">
+        <label class="field">
+          <span class="label">Provider</span>
+          <select id="provider" style="width:100%;padding:12px 12px;border-radius:10px;border:1px solid var(--border);background:#0c0f14;color:var(--text)">
+            <option value="openai">OpenAI</option>
+            <option value="openrouter">OpenRouter</option>
+            <option value="together">Together</option>
+          </select>
+        </label>
+        <label class="field">
+          <span class="label">Model</span>
+          <input id="model" type="text" placeholder="e.g. gpt-4o-mini or llama3.1" value="gpt-4o-mini">
+        </label>
+      </div>
+      <div class="grid cols-2 gap top">
+        <label class="field">
+          <span class="label">Temperature</span>
+          <input id="temperature" type="number" step="0.1" min="0" max="2" value="0.7">
+        </label>
+        <label class="field">
+          <span class="label">Use my own API</span>
+          <input id="useCustom" type="checkbox"> <span class="small muted">Send requests via your custom endpoint and API key</span>
+        </label>
+      </div>
+
+      <div id="customBox" class="card" style="display:none;margin-top:16px">
+        <div class="grid cols-2 gap">
+          <label class="field">
+            <span class="label">Custom Endpoint</span>
+            <input id="customEndpoint" type="text" placeholder="e.g. https://your-proxy.example.com/v1/chat/completions">
+          </label>
+          <label class="field">
+            <span class="label">Custom API Key</span>
+            <input id="customApiKey" type="password" placeholder="Stored locally, sent to server only when used">
+          </label>
+        </div>
+        <div class="note" style="margin-top:8px">Your key is kept in localStorage and only sent to serverless function when generating content.</div>
+      </div>
+
+      <div class="row top">
+        <button id="saveBtn" class="btn primary">Save Settings</button>
+        <span id="status" class="small muted"></span>
+        <a class="btn right" href="../index.html">Back to Home</a>
+      </div>
+      <div class="note" style="margin-top:12px">Note: On Vercel, requests go through a serverless function. You can use server-provided provider keys (OpenAI/OpenRouter/Together), or switch to your own endpoint and key.</div>
+    </div>
+  </div>
+</body>
+</html>
+
+
