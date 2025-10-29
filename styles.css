@@ -10,6 +10,7 @@ body{
 .site-header{border-bottom:1px solid var(--border);background:linear-gradient(180deg,rgba(79,140,255,.06),transparent)}
 .site-header h1{margin:0 0 6px 0;font-size:24px}
 .subtitle{margin:0;color:var(--muted)}
+.logo{width:28px;height:28px;display:block}
 .site-footer{border-top:1px solid var(--border);margin-top:48px}
 .site-footer h3{margin:0 0 12px 0;font-size:16px}
 .site-footer .list{list-style:none;padding:0;margin:0}
