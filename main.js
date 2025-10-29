@@ -35,10 +35,11 @@
         provider: s.provider || 'openai',
         useCustom: !!s.useCustom,
         customEndpoint: s.customEndpoint || '',
-        customApiKey: s.customApiKey || ''
+        customApiKey: s.customApiKey || '',
+        customAuth: s.customAuth || 'bearer'
       };
     }catch{
-      return { model:'gpt-4o-mini', temperature:0.7, provider:'openai', useCustom:false, customEndpoint:'', customApiKey:'' };
+      return { model:'gpt-4o-mini', temperature:0.7, provider:'openai', useCustom:false, customEndpoint:'', customApiKey:'', customAuth:'bearer' };
     }
   }
   function loadState(){
@@ -121,8 +122,8 @@
   }
 
   async function callAI(messages){
-    const { model, temperature, provider, useCustom, customEndpoint, customApiKey } = getConfig();
-    const payload = { model, temperature, messages, provider, useCustom, customEndpoint, customApiKey };
+    const { model, temperature, provider, useCustom, customEndpoint, customApiKey, customAuth } = getConfig();
+    const payload = { model, temperature, messages, provider, useCustom, customEndpoint, customApiKey, customAuth };
     const headers = { 'Content-Type':'application/json' };
     const res = await fetch('/api/chat', { method:'POST', headers, body: JSON.stringify(payload) });
     if(!res.ok){
