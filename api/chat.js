@@ -17,7 +17,8 @@ export default async function handler(req, res) {
       provider = 'openai',
       useCustom = false,
       customEndpoint,
-      customApiKey
+      customApiKey,
+      customAuth = 'bearer'
     } = req.body || {};
     if (!Array.isArray(messages) || messages.length === 0) {
       return res.status(400).json({ error: 'messages is required' });
@@ -52,12 +53,27 @@ export default async function handler(req, res) {
 
     const payload = { model, temperature, messages };
 
+    // Build headers based on auth scheme
+    const headers = { 'Content-Type': 'application/json' };
+    if (useCustom) {
+      if (customAuth === 'bearer') {
+        headers['Authorization'] = `Bearer ${apiKey}`;
+      } else if (customAuth === 'authorization') {
+        headers['Authorization'] = apiKey;
+      } else if (customAuth === 'api-key') {
+        headers['api-key'] = apiKey;
+      } else if (customAuth === 'x-api-key') {
+        headers['X-API-Key'] = apiKey;
+      } else {
+        headers['Authorization'] = `Bearer ${apiKey}`;
+      }
+    } else {
+      headers['Authorization'] = `Bearer ${apiKey}`;
+    }
+
     const r = await fetch(endpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
-      },
+      headers,
       body: JSON.stringify(payload)
     });
 
