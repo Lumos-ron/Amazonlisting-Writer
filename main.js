@@ -63,18 +63,17 @@
   function saveState(){
     if(!els.saveConfig.checked) return;
     const existing = (()=>{ try{return JSON.parse(localStorage.getItem(LS_KEY)||'{}')}catch{return{}} })();
-    const s = {
-      // keep existing config if fields not present on this page
-      apiKey: els.apiKey ? els.apiKey.value.trim() : (existing.apiKey || ''),
-      apiEndpoint: els.apiEndpoint ? els.apiEndpoint.value.trim() : (existing.apiEndpoint || 'https://api.openai.com/v1/chat/completions'),
-      model: els.model ? els.model.value.trim() : (existing.model || 'gpt-4o-mini'),
-      temperature: els.temperature ? Number(els.temperature.value) : (existing.temperature ?? 0.7),
-      keywords: els.keywords ? els.keywords.value : (existing.keywords || ''),
-      features: els.features ? els.features.value : (existing.features || ''),
-      compTitle: els.compTitle ? els.compTitle.value : (existing.compTitle || ''),
-      compBullets: els.compBullets ? els.compBullets.value : (existing.compBullets || ''),
-      genType: els.genType() ? els.genType().value : (existing.genType || 'both')
-    };
+    // Start from existing, only overwrite fields that are present on this page
+    const s = { ...existing };
+    if(els.apiKey) s.apiKey = els.apiKey.value.trim();
+    if(els.apiEndpoint) s.apiEndpoint = els.apiEndpoint.value.trim();
+    if(els.model) s.model = els.model.value.trim();
+    if(els.temperature) s.temperature = Number(els.temperature.value);
+    if(els.keywords) s.keywords = els.keywords.value;
+    if(els.features) s.features = els.features.value;
+    if(els.compTitle) s.compTitle = els.compTitle.value;
+    if(els.compBullets) s.compBullets = els.compBullets.value;
+    if(els.genType()) s.genType = els.genType().value;
     localStorage.setItem(LS_KEY, JSON.stringify(s));
   }
 
